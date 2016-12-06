@@ -12,7 +12,7 @@ public class EmpDao {
 	public EmpDao(){}
 	
 	//select all 처리하는 메소드
-	public ArrayList<Employee> selectAll(){//형변환 신경안쓰로 바로 바꿔주기때문에 제너릭사용 (<>제너릭)
+	public ArrayList<Employee> selectAll(){//형변환 신경안쓰로 바로 바꿔주기때문에 제너릭사용 (<>제너릭)  
 		ArrayList<Employee> list = null;
 		Connection conn = null;
 		Statement stmt = null;
