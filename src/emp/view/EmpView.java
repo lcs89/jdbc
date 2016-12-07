@@ -8,8 +8,9 @@ import emp.model.dto.Employee;
 
 public class EmpView {
 
+	private static Scanner sc = new Scanner(System.in);
 	public static void menu(){
-		Scanner sc = new Scanner(System.in);
+
 		Empcontroller econtroll = new Empcontroller();
 		int no;
 		
@@ -26,7 +27,7 @@ public class EmpView {
 			
 			switch(no){
 			case 1:		econtroll.empSelectAll(); break;
-			case 2:
+			case 2:		econtroll.empSelectOne(inputEmpId()); break;
 			case 3:
 			case 4:
 			case 5:
@@ -37,6 +38,12 @@ public class EmpView {
 			
 		}while(true);
 	}
+	//사번을 키보드로 입력받아, 사번 리턴하는 메소드
+	public static String inputEmpId(){
+		System.out.println("\n조회할 사번 : ");
+		return sc.next();
+	}
+	
 	
 	//직원정보 모두 출력
 	public void printAll(ArrayList<Employee> list){
@@ -53,6 +60,12 @@ public class EmpView {
 		// 사우너정보 관리 프로그램 구동
 		menu();
 
+	}
+	public void printEmp(Employee emp) {
+		System.out.println("\n조회된 직원 정보는 아래와 같습니다....");
+		System.out.println("\n"  + emp);
+		// TODO Auto-generated method stub
+		
 	}
 
 }

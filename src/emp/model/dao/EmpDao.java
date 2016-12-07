@@ -12,7 +12,7 @@ public class EmpDao {
 	public EmpDao(){}
 	
 	//select all 처리하는 메소드
-	public ArrayList<Employee> selectAll(){//형변환 신경안쓰로 바로 바꿔주기때문에 제너릭사용 (<>제너릭)  
+	public ArrayList<Employee> selectAll(){//형변환 신경안쓰로 바로 바꿔주기때문에 제너릭사용 (<>제너릭)
 		ArrayList<Employee> list = null;
 		Connection conn = null;
 		Statement stmt = null;
@@ -82,10 +82,58 @@ public class EmpDao {
 		}
 		return list;
 	}
-	
 	//select one 처리하는 메소드
 	public Employee selectOne(String empId){
 		Employee emp = null;
+		Connection  conn = null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		try{
+			//1. 드라이버 등록
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			
+			//2. 데이터베이스 연결
+			conn = DriverManager.getConnection(
+					"jdbc:oracle:thin:@127.0.0.1:1521:xe", 
+					"student", "student");
+			
+			//3. 쿼리문 작성
+			String query = "select * from employee " + 
+						"where emp_id = '" + empId + "'";
+			
+			//4. 문장객체 생성하고, 실행시키고 결과받기
+			stmt = conn.createStatement();			
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()){
+				emp = new Employee();
+				emp.setEmpId(empId);
+				emp.setEmpName(rset.getString("emp_name"));
+				emp.setEmpNo(rset.getString("emp_no"));
+				emp.setEmail(rset.getString("email"));
+				emp.setPhone(rset.getString("phone"));
+				emp.setSalary(rset.getInt("salary"));
+				emp.setBonusPct(rset.getDouble("bonus_pct"));
+				emp.setDeptId(rset.getString("dept_id"));
+				emp.setJobId(rset.getString("job_id"));
+				emp.setHireDate(rset.getDate("hire_date"));
+				emp.setMarriage(rset.getString("marriage").charAt(0));
+				emp.setMgrId(rset.getString("mgr_id"));
+			}
+			
+			
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rset.close();
+				conn.close();
+				rset.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}		
 		return emp;  
 	}
 	
